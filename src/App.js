@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+// App.js
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ProtectedRoute from "../src/components/ProtectedRoute";
+import { useAuth } from "./components/AuthContext";
+import Register from "./components/Register";
+import Login from "./components/Login";
+import Home from "./components/Home";
+import Logout from "./components/Logout";
+import Navbar from "./components/Navbar";
+import EditProfile from "./components/EditProfile";
+import EditMenu from "./components/EditMenu";
 
-function App() {
+const App = () => {
+  const { isAuthenticated, loading } = useAuth();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      {isAuthenticated && <Navbar />}
+
+      <Routes>
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/home" element={<ProtectedRoute element={Home} />} />
+        <Route
+          path="/editprofile"
+          element={<ProtectedRoute element={EditProfile} />}
+        />
+        <Route
+          path="/editmenu"
+          element={<ProtectedRoute element={EditMenu} />}
+        />
+        <Route path="/logout" element={<ProtectedRoute element={Logout} />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
