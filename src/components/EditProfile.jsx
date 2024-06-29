@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useAuth } from "./AuthContext";
+import { useNavigate } from "react-router-dom";
+import { backend_url } from "../Constants";
 
 const EditProfile = () => {
+  const { isAuthenticated, user } = useAuth();
+  const navigate = useNavigate();
   const [restaurant, setRestaurant] = useState({
     id: "",
     name: "",
@@ -17,28 +22,32 @@ const EditProfile = () => {
 
   useEffect(() => {
     const fetchUserRestaurants = async () => {
-      const token = localStorage.getItem("retailertoken");
-      try {
-        const response = await axios.get(
-          "http://localhost:8080/api/v1/users/1/restaurants",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+      if (isAuthenticated && user) {
+        const token = localStorage.getItem("retailertoken");
+        try {
+          const response = await axios.get(
+            `${backend_url}/users/${user.userId}/restaurants`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          if (response.data.length === 0) {
+            setIsNewRestaurant(true);
+          } else {
+            setRestaurant(response.data[0]);
           }
-        );
-        if (response.data.length === 0) {
-          setIsNewRestaurant(true);
-        } else {
-          setRestaurant(response.data[0]);
+        } catch (error) {
+          console.error("Error fetching user restaurants:", error);
+          localStorage.removeItem("retailertoken");
+          navigate("/login");
         }
-      } catch (error) {
-        console.error("Error fetching user restaurants:", error);
       }
     };
 
     fetchUserRestaurants();
-  }, []);
+  }, [isAuthenticated, user, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -54,8 +63,8 @@ const EditProfile = () => {
     try {
       if (isNewRestaurant) {
         await axios.post(
-          "http://localhost:8080/api/v1/restaurants",
-          { ...restaurant, userId: 1 },
+          `${backend_url}/restaurants`,
+          { ...restaurant, userId: user.userId },
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -65,7 +74,7 @@ const EditProfile = () => {
         alert("Restaurant added successfully!");
       } else {
         await axios.put(
-          `http://localhost:8080/api/v1/restaurants/${restaurant.id}`,
+          `${backend_url}/restaurants/${restaurant.id}`,
           restaurant,
           {
             headers: {
