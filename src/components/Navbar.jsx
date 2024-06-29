@@ -57,8 +57,8 @@ const Navbar = () => {
           <a href="/editmenu" className="text-gray-600 hover:text-gray-900">
             Edit Menu
           </a>
-          <a href="#" className="text-gray-600 hover:text-gray-900">
-            Orders
+          <a href="/menu" className="text-gray-600 hover:text-gray-900">
+            View Menu
           </a>
           {/* Logout button */}
           <button

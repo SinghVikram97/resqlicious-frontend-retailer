@@ -10,6 +10,7 @@ import Logout from "./components/Logout";
 import Navbar from "./components/Navbar";
 import EditProfile from "./components/EditProfile";
 import EditMenu from "./components/EditMenu";
+import MenuDetailsPage from "./components/MenuDetailsPage";
 
 const App = () => {
   const { isAuthenticated, loading } = useAuth();
@@ -29,6 +30,10 @@ const App = () => {
         <Route
           path="/editmenu"
           element={<ProtectedRoute element={EditMenu} />}
+        />
+        <Route
+          path="/menu"
+          element={<ProtectedRoute element={MenuDetailsPage} />}
         />
         <Route path="/logout" element={<ProtectedRoute element={Logout} />} />
       </Routes>
