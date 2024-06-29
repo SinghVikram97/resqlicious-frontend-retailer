@@ -32,7 +32,6 @@ const EditProfile = () => {
         } else {
           setRestaurant(response.data[0]);
         }
-        console.log(isNewRestaurant);
       } catch (error) {
         console.error("Error fetching user restaurants:", error);
       }
