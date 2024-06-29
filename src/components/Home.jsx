@@ -1,33 +1,63 @@
 import React, { useState, useEffect } from "react";
+import { useAuth } from "./AuthContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { backend_url } from "../Constants";
 
 const Home = () => {
+  const { isAuthenticated, user } = useAuth();
   const [restaurant, setRestaurant] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRestaurant = async () => {
-      const token = localStorage.getItem("retailertoken");
-      try {
-        const response = await axios.get(
-          "http://localhost:8080/api/v1/restaurants/1",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+      if (isAuthenticated && user) {
+        const token = localStorage.getItem("retailertoken");
+        try {
+          const response = await axios.get(
+            `${backend_url}/users/${user.userId}/restaurants`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          if (response.data.length > 0) {
+            setRestaurant(response.data[0]);
+          } else {
+            setRestaurant(null);
           }
-        );
-        setRestaurant(response.data);
-      } catch (error) {
-        console.error("Error fetching restaurant data:", error);
-        localStorage.removeItem("retailertoken");
-        navigate("/login");
+        } catch (error) {
+          console.error("Error fetching restaurant data:", error);
+          localStorage.removeItem("retailertoken");
+          navigate("/login");
+        }
       }
     };
 
     fetchRestaurant();
-  }, [navigate]);
+  }, [isAuthenticated, user, navigate]);
+
+  if (restaurant === null) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center py-10 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-2xl bg-white rounded-lg shadow-lg overflow-hidden p-6 text-center">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            No restaurant registered.
+          </h2>
+          <p className="text-gray-700 mb-6">
+            Please register your restaurant to view the details here.
+          </p>
+          <button
+            onClick={() => navigate("/editprofile")}
+            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+          >
+            Register Restaurant
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (!restaurant) {
     return <div>Loading...</div>;
@@ -35,7 +65,7 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center py-10 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-2xl bg-white rounded-lg shadow-lg overflow-hidden">
+      <div className="max-w-3xl bg-white rounded-lg shadow-lg overflow-hidden">
         <img
           className="w-full h-64 object-cover"
           src="https://via.placeholder.com/400x300"
