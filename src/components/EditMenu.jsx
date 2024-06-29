@@ -14,6 +14,7 @@ const EditMenu = () => {
   const [newDish, setNewDish] = useState({
     name: "",
     price: "",
+    description: "", // Added description field
   });
 
   useEffect(() => {
@@ -146,6 +147,7 @@ const EditMenu = () => {
         {
           name: newDish.name,
           price: parseFloat(newDish.price),
+          description: newDish.description, // Include description
           categoryId: selectedCategory.id,
         },
         {
@@ -161,6 +163,7 @@ const EditMenu = () => {
       setNewDish({
         name: "",
         price: "",
+        description: "", // Reset description field
       });
     } catch (error) {
       console.error("Error adding dish:", error);
@@ -226,6 +229,17 @@ const EditMenu = () => {
             type="number"
             name="price"
             value={editedDish.price}
+            onChange={handleInputChange}
+            className="mt-1 p-2 w-full border rounded"
+          />
+        </div>
+        <div className="mt-2">
+          <label className="block text-sm font-medium text-gray-700">
+            Description
+          </label>
+          <textarea
+            name="description"
+            value={editedDish.description}
             onChange={handleInputChange}
             className="mt-1 p-2 w-full border rounded"
           />
@@ -332,6 +346,17 @@ const EditMenu = () => {
                 type="number"
                 name="price"
                 value={newDish.price}
+                onChange={handleNewDishChange}
+                className="mt-1 p-2 w-full border rounded"
+              />
+            </div>
+            <div className="mt-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Description
+              </label>
+              <textarea
+                name="description"
+                value={newDish.description}
                 onChange={handleNewDishChange}
                 className="mt-1 p-2 w-full border rounded"
               />
