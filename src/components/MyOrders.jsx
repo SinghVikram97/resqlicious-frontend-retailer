@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
-import CategoryCard from "./CategoryCard";
 import { backend_url } from "../Constants";
 
 const MyOrders = () => {
@@ -96,7 +95,7 @@ const MyOrders = () => {
   if (restaurant === null) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center py-10 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-2xl bg-white rounded-lg shadow-lg overflow-hidden p-6 text-center">
+        <div className="max-w-md bg-white rounded-lg shadow-lg overflow-hidden p-6 text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">
             No restaurant registered.
           </h2>
@@ -115,26 +114,29 @@ const MyOrders = () => {
   }
 
   if (orderDetails.length === 0) {
-    return <div className="text-center">No orders found.</div>;
+    return <div className="text-center py-8">No orders found.</div>;
   }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <h2 className="text-2xl font-bold mb-4">My Orders</h2>
       {orderDetails.map((order) => (
-        <div key={order.id} className="mb-4">
+        <div
+          key={order.id}
+          className="mb-6 bg-white rounded-lg shadow-lg overflow-hidden p-6"
+        >
           <h3 className="text-lg font-bold mb-2">Order #{order.id}</h3>
           <p className="text-gray-600 mb-2">Pickup Time: {order.pickuptime}</p>
-          {order.dishes.map((dish) => (
-            <div key={dish.id} className="mb-2">
-              <p className="text-gray-600 mb-1">{dish.name}</p>
-              <p className="text-gray-600 mb-1">Quantity: {dish.quantity}</p>
-              <p className="text-gray-600 mb-1">
-                Price: ${dish.price.toFixed(2)}
-              </p>
-              <p className="text-gray-600 mb-1">{dish.description}</p>
-            </div>
-          ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {order.dishes.map((dish) => (
+              <div key={dish.id} className="p-4 border rounded-lg">
+                <p className="text-lg font-semibold">{dish.name}</p>
+                <p className="text-gray-700 mb-2">Quantity: {dish.quantity}</p>
+                <p className="text-gray-700 mb-2">Price: ${dish.price}</p>
+                <p className="text-gray-700">{dish.description}</p>
+              </div>
+            ))}
+          </div>
         </div>
       ))}
     </div>
