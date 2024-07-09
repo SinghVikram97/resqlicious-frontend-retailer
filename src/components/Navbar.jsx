@@ -60,6 +60,9 @@ const Navbar = () => {
           <a href="/menu" className="text-gray-600 hover:text-gray-900">
             View Menu
           </a>
+          <a href="/order" className="text-gray-600 hover:text-gray-900">
+            My Orders
+          </a>
           {/* Logout button */}
           <button
             onClick={() => {

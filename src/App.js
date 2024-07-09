@@ -11,6 +11,7 @@ import Navbar from "./components/Navbar";
 import EditProfile from "./components/EditProfile";
 import EditMenu from "./components/EditMenu";
 import MenuDetailsPage from "./components/MenuDetailsPage";
+import MyOrders from "./components/MyOrders";
 
 const App = () => {
   const { isAuthenticated, loading } = useAuth();
@@ -35,6 +36,7 @@ const App = () => {
           path="/menu"
           element={<ProtectedRoute element={MenuDetailsPage} />}
         />
+        <Route path="/order" element={<ProtectedRoute element={MyOrders} />} />
         <Route path="/logout" element={<ProtectedRoute element={Logout} />} />
       </Routes>
     </Router>
