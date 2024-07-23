@@ -68,7 +68,7 @@ const Home = () => {
       <div className="max-w-3xl bg-white rounded-lg shadow-lg overflow-hidden">
         <img
           className="w-full h-64 object-cover"
-          src="https://via.placeholder.com/400x300"
+          src={`http://localhost:50515/${restaurant.imageUrl}`}
           alt={restaurant.name}
         />
         <div className="p-6">
