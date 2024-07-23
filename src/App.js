@@ -12,6 +12,7 @@ import EditProfile from "./components/EditProfile";
 import EditMenu from "./components/EditMenu";
 import MenuDetailsPage from "./components/MenuDetailsPage";
 import MyOrders from "./components/MyOrders";
+import RestaurantImage from "./components/RestaurantImage";
 
 const App = () => {
   const { isAuthenticated, loading } = useAuth();
@@ -38,6 +39,10 @@ const App = () => {
         />
         <Route path="/order" element={<ProtectedRoute element={MyOrders} />} />
         <Route path="/logout" element={<ProtectedRoute element={Logout} />} />
+        <Route
+          path="/restaurantimage"
+          element={<ProtectedRoute element={RestaurantImage} />}
+        />
       </Routes>
     </Router>
   );
