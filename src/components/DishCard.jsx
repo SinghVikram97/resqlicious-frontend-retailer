@@ -8,6 +8,7 @@ const DishCard = ({ dish }) => {
           <h3 className="text-lg font-bold">{dish.name}</h3>
           <p className="text-gray-600 mb-2">${dish.price}</p>
           <p className="text-gray-700">{dish.description}</p>
+          <p className="text-gray-700">Quantity: {dish.quantity}</p>
         </div>
       </div>
     </div>

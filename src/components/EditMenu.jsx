@@ -15,6 +15,7 @@ const EditMenu = () => {
     name: "",
     price: "",
     description: "", // Added description field
+    quantity: "",
   });
 
   useEffect(() => {
@@ -149,6 +150,7 @@ const EditMenu = () => {
           price: parseFloat(newDish.price),
           description: newDish.description, // Include description
           categoryId: selectedCategory.id,
+          quantity: newDish.quantity,
         },
         {
           headers: {
@@ -164,6 +166,7 @@ const EditMenu = () => {
         name: "",
         price: "",
         description: "", // Reset description field
+        quantity: "",
       });
     } catch (error) {
       console.error("Error adding dish:", error);
@@ -229,6 +232,18 @@ const EditMenu = () => {
             type="number"
             name="price"
             value={editedDish.price}
+            onChange={handleInputChange}
+            className="mt-1 p-2 w-full border rounded"
+          />
+        </div>
+        <div className="mt-2">
+          <label className="block text-sm font-medium text-gray-700">
+            Quantity
+          </label>
+          <input
+            type="number"
+            name="quantity"
+            value={editedDish.quantity}
             onChange={handleInputChange}
             className="mt-1 p-2 w-full border rounded"
           />
@@ -346,6 +361,18 @@ const EditMenu = () => {
                 type="number"
                 name="price"
                 value={newDish.price}
+                onChange={handleNewDishChange}
+                className="mt-1 p-2 w-full border rounded"
+              />
+            </div>
+            <div className="mt-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Quantity
+              </label>
+              <input
+                type="number"
+                name="quantity"
+                value={newDish.quantity}
                 onChange={handleNewDishChange}
                 className="mt-1 p-2 w-full border rounded"
               />
