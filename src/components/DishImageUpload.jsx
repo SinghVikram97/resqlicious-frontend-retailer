@@ -162,7 +162,7 @@ const DishImageUpload = () => {
               <img
                 src={`http://localhost:50515/${dish.imageUrl}`}
                 alt={dish.name}
-                className="mb-4 w-full"
+                className="mb-4 w-32 h-32 object-cover"
               />
             ) : (
               <p className="text-gray-700 mb-4">No image uploaded</p>
@@ -184,7 +184,11 @@ const DishImageUpload = () => {
           <h3 className="text-xl font-bold mb-2">Upload Image</h3>
           <input type="file" accept="image/*" onChange={handleImageChange} />
           {preview && (
-            <img src={preview} alt="Preview" className="mt-4 w-full" />
+            <img
+              src={preview}
+              alt="Preview"
+              className="mt-4 w-32 h-32 object-cover"
+            />
           )}
           <button
             onClick={handleImageUpload}
