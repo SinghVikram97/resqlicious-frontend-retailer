@@ -13,6 +13,7 @@ import EditMenu from "./components/EditMenu";
 import MenuDetailsPage from "./components/MenuDetailsPage";
 import MyOrders from "./components/MyOrders";
 import RestaurantImage from "./components/RestaurantImage";
+import DishImageUpload from "./components/DishImageUpload";
 
 const App = () => {
   const { isAuthenticated, loading } = useAuth();
@@ -42,6 +43,10 @@ const App = () => {
         <Route
           path="/restaurantimage"
           element={<ProtectedRoute element={RestaurantImage} />}
+        />
+        <Route
+          path="/dishimageupload"
+          element={<ProtectedRoute element={DishImageUpload} />}
         />
       </Routes>
     </Router>

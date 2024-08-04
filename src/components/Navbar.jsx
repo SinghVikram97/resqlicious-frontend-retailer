@@ -63,6 +63,12 @@ const Navbar = () => {
           >
             Edit Image
           </a>
+          <a
+            href="/dishimageupload"
+            className="text-gray-600 hover:text-gray-900"
+          >
+            Edit Dish Image
+          </a>
           <a href="/menu" className="text-gray-600 hover:text-gray-900">
             View Menu
           </a>
